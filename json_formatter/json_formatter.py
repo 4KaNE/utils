@@ -6,12 +6,16 @@ from json import load, dump
 from json.decoder import JSONDecodeError
 
 def json_format(json_path: str) -> str:
-
+    """formatter
+       argument: jsonfile path
+       return: str (success or failed)
+    """
     try:
         with open(json_path, 'r', encoding="utf-8_sig") as json_file:
             json_data = load(json_file)
     except JSONDecodeError:
-        result = "Failed...: {}\n JSONDecodeError".format(basename(json_path))
+        result = "Failed...: JSONDecodeError occurred in {}"\
+        .format(basename(json_path))
         return result
 
     output_json = open(basename(json_path), "w", encoding="utf-8_sig")
@@ -19,7 +23,7 @@ def json_format(json_path: str) -> str:
     dump(json_data, output_json, ensure_ascii=False, indent=4, \
     sort_keys=True, separators=(',', ': '))
 
-    result = "Successful!: {}".format(basename(json_path))
+    result = "Successful!: {} was formatted.".format(basename(json_path))
     return result
 
 if __name__ == "__main__":
