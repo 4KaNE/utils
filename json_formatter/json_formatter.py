@@ -1,22 +1,38 @@
-"""jsonファイルを整形する"""
-import sys
-import os.path as path
-import json
+"""Format json file"""
+from sys import argv
+from os.path import basename, splitext
+from time import sleep
+from json import load, dump
+from json.decoder import JSONDecodeError
 
-def json_format(json_path):
-    file_name = json_path
+def json_format(json_path: str) -> str:
 
-    json_file = open(path.basename(file_name), 'r', encoding="utf-8_sig")
-    json_data = json.load(json_file)
+    try:
+        with open(json_path, 'r', encoding="utf-8_sig") as json_file:
+            json_data = load(json_file)
+    except JSONDecodeError:
+        result = "Failed...: {}\n JSONDecodeError".format(basename(json_path))
+        return result
 
-    output_json = open("{}".format(file_name), "w", encoding="utf-8_sig")
+    output_json = open(basename(json_path), "w", encoding="utf-8_sig")
 
-    json.dump(json_data, output_json, ensure_ascii=False, indent=4, \
+    dump(json_data, output_json, ensure_ascii=False, indent=4, \
     sort_keys=True, separators=(',', ': '))
 
+    result = "Successful!: {}".format(basename(json_path))
+    return result
+
 if __name__ == "__main__":
-    print(sys.argv[1])
-    json_format(sys.argv[1])
-    while True:
-        text = input('>> ')
-        print(text)
+    if len(argv) >= 2:
+        for file_path in argv[1:]:
+            splited = splitext(file_path)
+            if splited[1] == '.json':
+                result = json_format(file_path)
+                print(result)
+            else:
+                print(basename(file_path)," is not json file")
+
+    else:
+        print("usage: Drag and drop json file to json_formatter.py")
+    
+    sleep(30)
