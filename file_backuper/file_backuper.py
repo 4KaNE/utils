@@ -1,6 +1,7 @@
 """File backuper"""
 import asyncio
 import datetime
+import math
 from time import sleep
 
 def save_file(file_path: str, loop) -> str:
@@ -12,22 +13,26 @@ def save_file(file_path: str, loop) -> str:
     print(datetime.datetime.now())
     loop.call_later(3600, save_file, file_path, loop)
 
-def check_on_the_hour() -> bool:
-    """Check if the current time is on the hour.
-       return: bool
+def wait_the_time() -> None:
     """
-    now = datetime.datetime.now()
-    result = True if now.minute == 0 else False
-    return result
+    Wait for the hour.
+    """
+    while True:
+        now = datetime.datetime.now()
+        if now.minute == 0:
+            break
+        else:
+            diff = (3600 - (now.minute * 60 + now.second))
+            interval = math.ceil(diff/2)
+            print(interval)
+            sleep(interval)
+        
+    return
+
 
 if __name__ == "__main__":
     file_path = "test/test"
-    while True:
-        if check_on_the_hour() is True:
-            break
-        else:
-            print("test")
-            sleep(60)
+    wait_the_time()
 
     loop = asyncio.get_event_loop()
     loop.call_soon(save_file, file_path, loop)
