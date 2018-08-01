@@ -1,7 +1,6 @@
 """File backuper"""
-import asyncio
-import datetime
-import math
+from datetime.datetime import now, strptime
+from math import ceil
 from time import sleep
 
 def save_file(file_path: str, loop) -> str:
@@ -16,33 +15,37 @@ def save_file(file_path: str, loop) -> str:
     Returns
     ----------
     result : str
-        success or failed + datetime
+        success or failed
     """
-    print(file_path)
-    print(datetime.datetime.now())
-    loop.call_later(3600, save_file, file_path, loop)
 
-def wait_the_time() -> None:
+    return "Success or Failed"
+
+def wait_the_time() -> str:
     """
     Wait for the hour.
+    
+    Returns
+    ----------
+    date_str : str
+        Time to start processing
     """
     while True:
-        now = datetime.datetime.now()
+        now = now()
         if now.minute == 0:
             break
         else:
             diff = (3600 - (now.minute * 60 + now.second))
-            interval = math.ceil(diff/2)
+            interval = ceil(diff/2)
             print(interval)
             sleep(interval)
+
+        now_str = strptime(now, '%Y-%m-%d %H:%M:%S')
         
-    return
+    return now_str
 
 
 if __name__ == "__main__":
     file_path = "test/test"
-    wait_the_time()
-
-    loop = asyncio.get_event_loop()
-    loop.call_soon(save_file, file_path, loop)
-    loop.run_forever()
+    while True:
+        print(wait_the_time())
+        print(save_file(file_path))
