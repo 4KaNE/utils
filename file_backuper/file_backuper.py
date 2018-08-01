@@ -5,9 +5,18 @@ import math
 from time import sleep
 
 def save_file(file_path: str, loop) -> str:
-    """Back up the specified file with rename.
-       argument1: str(The path of the file you want to back up.)
-       return: str(success or failed + datetime)
+    """
+    Back up the specified file with rename.
+    
+    Parameters
+    ----------
+    file_path : str
+        The path of the file you want to back up.
+        
+    Returns
+    ----------
+    result : str
+        success or failed + datetime
     """
     print(file_path)
     print(datetime.datetime.now())
