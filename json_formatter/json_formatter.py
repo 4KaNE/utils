@@ -6,9 +6,18 @@ from json import load, dump
 from json.decoder import JSONDecodeError
 
 def json_format(json_path: str) -> str:
-    """formatter
-       argument: jsonfile path
-       return: str (success or failed)
+    """
+    Format json file.
+    
+    Parameters
+    ----------
+    json_path : str
+        The path of the json file you want to format.
+
+    Return
+    ----------
+    result : str
+        success or failed.
     """
     try:
         with open(json_path, 'r', encoding="utf-8_sig") as json_file:
