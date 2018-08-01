@@ -55,7 +55,7 @@ def read_file(file_path):
     """
     try:
         with open(file_path, 'r', encoding="utf-8_sig") as target_file:
-            file_data = load(target_file)
+            file_data = target_file.read()
     except FileNotFoundError:
         file_data = None
         print('File not Found!')
