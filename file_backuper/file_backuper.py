@@ -1,11 +1,11 @@
 """File backuper"""
-from datetime.datetime import now, strptime
+from datetime import datetime
 from math import ceil
 from time import sleep
 from os import mkdir
 from os.path import isdir, basename, splitext
 
-def save_file(file_path: str, loop) -> str:
+def save_file(file_path: str) -> str:
     """
     Back up the specified file with rename.
     
@@ -24,14 +24,14 @@ def save_file(file_path: str, loop) -> str:
         result = "failed"
         return result
 
-    splited = os.path.splitext(os.path.basename(file_path))
+    splited = splitext(basename(file_path))
     dir_path = "./{}".format(splited[0])
     if not isdir(dir_path):
-        #保存用ディレクトリがない
         mkdir(dir_path)
 
-    save_time = strptime(now(), '%Y-%m-%d %H:%M')
-    save_file_path = "{}/{}{}{}".format(dirpath, splited[0], save_time, splited[1])
+    now = datetime.now()
+    save_time = now.strftime('%Y-%m-%d_%H%M')
+    save_file_path = "{}/{}{}{}".format(dir_path, splited[0], save_time, splited[1])
     
     with open(save_file_path, 'w', encoding="utf-8_sig") as save_file:
         save_file.write(file_data)
@@ -72,7 +72,7 @@ def wait_the_time() -> str:
         Time to start processing
     """
     while True:
-        now = now()
+        now = datetime.now()
         if now.minute == 0:
             break
         else:
@@ -81,13 +81,14 @@ def wait_the_time() -> str:
             print(interval)
             sleep(interval)
 
-        now_str = strptime(now, '%Y-%m-%d %H:%M:%S')
+        now_str = now.strptime('%Y-%m-%d %H:%M:%S')
         
     return now_str
 
 
 if __name__ == "__main__":
-    file_path = "test/test"
+    file_path = "path"
     while True:
         print(wait_the_time())
         print(save_file(file_path))
+
