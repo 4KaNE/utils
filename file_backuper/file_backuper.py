@@ -19,19 +19,27 @@ def save_file(file_path: str, loop) -> str:
     result : str
         success or failed
     """
+    file_data = read_file(file_path)
+    if file_path is None:
+        result = "failed"
+        return result
+
     splited = os.path.splitext(os.path.basename(file_path))
     dir_path = "./{}".format(splited[0])
-    if isdir(dir_path):
-        #保存用ディレクトリがある
-        pass
-    else:
+    if not isdir(dir_path):
         #保存用ディレクトリがない
         mkdir(dir_path)
+
+    save_time = strptime(now(), '%Y-%m-%d %H:%M')
+    save_file_path = "{}/{}{}{}".format(dirpath, splited[0], save_time, splited[1])
+    
+    with open(save_file_path, 'w', encoding="utf-8_sig") as save_file:
+        save_file.write(file_data)
         
+    result = "Success"
+    return result
 
-    return "Success or Failed"
-
-def open_file(file_path):
+def read_file(file_path):
     """
     Open the file and return the contents
     
