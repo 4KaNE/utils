@@ -20,6 +20,29 @@ def save_file(file_path: str, loop) -> str:
 
     return "Success or Failed"
 
+def open_file(file_path):
+    """
+    Open the file and return the contents
+    
+    Parameters
+    ----------
+    file_path : str
+        The path of the file.
+    
+    Returns
+    ----------
+    file_data : str
+        Data in the file
+    """
+    try:
+        with open(file_path, 'r', encoding="utf-8_sig") as target_file:
+            file_data = load(target_file)
+    except FileNotFoundError:
+        file_data = None
+        print('File not Found!')
+
+    return file_data
+
 def wait_the_time() -> str:
     """
     Wait for the hour.
