@@ -2,6 +2,8 @@
 from datetime.datetime import now, strptime
 from math import ceil
 from time import sleep
+from os import mkdir
+from os.path import isdir, basename, splitext
 
 def save_file(file_path: str, loop) -> str:
     """
@@ -17,6 +19,15 @@ def save_file(file_path: str, loop) -> str:
     result : str
         success or failed
     """
+    splited = os.path.splitext(os.path.basename(file_path))
+    dir_path = "./{}".format(splited[0])
+    if isdir(dir_path):
+        #保存用ディレクトリがある
+        pass
+    else:
+        #保存用ディレクトリがない
+        mkdir(dir_path)
+        
 
     return "Success or Failed"
 
