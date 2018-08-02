@@ -1,4 +1,4 @@
-"""File backuper"""
+"""File backupper"""
 from datetime import datetime
 from math import ceil
 from time import sleep
@@ -8,12 +8,12 @@ from os.path import isdir, basename, splitext
 def save_file(file_path: str) -> str:
     """
     Back up the specified file with rename.
-    
+
     Parameters
     ----------
     file_path : str
         The path of the file you want to back up.
-        
+
     Returns
     ----------
     result : str
@@ -32,22 +32,22 @@ def save_file(file_path: str) -> str:
     now = datetime.now()
     save_time = now.strftime('%Y-%m-%d_%H%M')
     save_file_path = "{}/{}{}{}".format(dir_path, splited[0], save_time, splited[1])
-    
-    with open(save_file_path, 'w', encoding="utf-8_sig") as save_file:
-        save_file.write(file_data)
-        
+
+    with open(save_file_path, 'w', encoding="utf-8_sig") as new_file:
+        new_file.write(file_data)
+
     result = "Success"
     return result
 
 def read_file(file_path):
     """
     Open the file and return the contents
-    
+
     Parameters
     ----------
     file_path : str
         The path of the file.
-    
+
     Returns
     ----------
     file_data : str
@@ -65,7 +65,7 @@ def read_file(file_path):
 def wait_the_time() -> str:
     """
     Wait for the hour.
-    
+
     Returns
     ----------
     date_str : str
@@ -80,16 +80,15 @@ def wait_the_time() -> str:
             interval = ceil(diff/2)
             sleep(interval)
 
-        
+
     now_str = now.strftime('%Y-%m-%d %H:%M:%S')
-        
+
     return now_str
 
 
 if __name__ == "__main__":
-    file_path = "path"
+    FILE_PATH = "path"
     while True:
         print(wait_the_time())
-        print(save_file(file_path))
+        print(save_file(FILE_PATH))
         sleep(60)
-
