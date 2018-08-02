@@ -78,10 +78,10 @@ def wait_the_time() -> str:
         else:
             diff = (3600 - (now.minute * 60 + now.second))
             interval = ceil(diff/2)
-            print(interval)
             sleep(interval)
 
-        now_str = now.strptime('%Y-%m-%d %H:%M:%S')
+        
+    now_str = now.strftime('%Y-%m-%d %H:%M:%S')
         
     return now_str
 
@@ -91,4 +91,5 @@ if __name__ == "__main__":
     while True:
         print(wait_the_time())
         print(save_file(file_path))
+        sleep(60)
 
