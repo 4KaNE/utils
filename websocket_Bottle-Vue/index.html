@@ -1,0 +1,28 @@
+<html>
+<head>
+<title>WebSocket with Bottle</title>
+<script src="https://cdn.jsdelivr.net/npm/vue@2.5.15/dist/vue.js"></script>
+</head>
+<body>
+  <section class="section" id="app">
+    <p>{{wsdata}}</p>
+    <p>time: {{wsdata.time}}</p>
+    <p>random: {{wsdata.random}}</p>
+  </section>
+
+  <script>
+    const vm = new Vue({
+      el: '#app',
+      data: {
+        wsdata: {},
+        ws: new WebSocket("ws://localhost:8888/websocket")
+      },
+      mounted: function () {
+        this.ws.onmessage = (evt) => {
+          this.wsdata = JSON.parse(evt.data)
+        }
+      }
+    })
+  </script>
+</body>
+</html>
